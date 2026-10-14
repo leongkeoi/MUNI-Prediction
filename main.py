@@ -24,13 +24,14 @@ API_BASE_URL = os.getenv("API_BASE_URL", "http://511.org/transit/StopMonitoring"
 # Endpoint Configurations
 STOPS = {
     "L": {"stopcode": "16641", "mock_file": "mock_L.json"},
-    "29": {"stopcode": "16556", "mock_file": "mock_29.json"}
+    "29_NB": {"stopcode": "16556", "mock_file": "mock_29NB.json"},
+    "29_SB": {"stopcode": "16555", "mock_file": "mock_29SB.json"},
 }
 
 # Timing Intervals (in seconds)
-API_FETCH_INTERVAL = 121
-APPROXIMATION_INTERVAL = 15
-DISPLAY_SWITCH_INTERVAL = 15
+API_FETCH_INTERVAL = 181
+APPROXIMATION_INTERVAL = 10
+DISPLAY_SWITCH_INTERVAL = 10
 
 # ==========================================
 # THREAD-SAFE STATE STORAGE (The Bridge)
@@ -38,9 +39,50 @@ DISPLAY_SWITCH_INTERVAL = 15
 state_lock = threading.Lock()
 shared_display_strings = {
     "L": "L Taraval: Loading...",
-    "29": "29 Sunset: Loading..."
+    "29_NB": "29 Sunset: Loading...",
+    "29_SB": "29 Sunset: Loading...",
 }
 
+last_fetched_payloads = {
+    "L": None,
+    "29_NB": None,
+    "29_SB": None,
+}
+
+def fetch_transit_data(line_id: str):
+    """Handles network request or reads from disk based on environment toggle."""
+    if USE_MOCK_DATA:
+        filename = STOPS[line_id]["mock_file"]
+        try:
+            with open(filename, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Error: Static testing file '{filename}' missing in directory.")
+            return None
+    else:
+        params = {
+            "api_key": API_KEY,
+            "agency": "SF",
+            "stopcode": STOPS[line_id]["stopcode"],
+            "format": "json"
+        }
+        try:
+            response = requests.get(API_BASE_URL, params=params, timeout=10)
+            if response.status_code == 429:
+                retry_after = response.headers.get("Retry-After", "30")
+                wait_time = int(retry_after)
+                print(f"⚠️ [429 Throttled] Rate limit hit for line {line_id}. Retrying after {wait_time} seconds.")
+                time.sleep(wait_time)
+                return None
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print(f"API Error ({response.status_code}) for line {line_id}")
+                return None
+        except Exception as e:
+            print(f"Network exception hitting 511 servers: {e}")
+            return None
+        
 # ==========================================
 # TRANSIT DATA LOGIC
 # ==========================================
@@ -150,7 +192,7 @@ def fetch_transit_data(line_id: str):
 # ==========================================
 
 def data_pipeline_worker():
-    """Background engine managing network calls (121s) and time approximations (30s)."""
+    """Background engine managing network calls (181s) and time approximations (10s)."""
     last_api_fetch = 0
     last_approximation = 0
     
@@ -159,23 +201,27 @@ def data_pipeline_worker():
     while True:
         current_time = time.time()
         
-        # Rule 1: Hit API / Refresh Disk cache every 121 seconds
+        # Rule 1: Hit API / Refresh Disk cache every 181 seconds
         if current_time - last_api_fetch >= API_FETCH_INTERVAL:
             for line_id in STOPS.keys():
                 payload = fetch_transit_data(line_id)
                 if payload:
+                    # Save the download cache to memory for future approximations
+                    last_fetched_payloads[line_id] = payload
                     process_transit_payload(line_id, payload)
-            last_api_fetch = current_time
-            last_approximation = current_time  # Sync math baseline frame
+                time.sleep(5)  # Stagger requests to avoid hitting API burst block rate limits
+            last_api_fetch = time.time()
+            last_approximation = last_api_fetch  # Reset approximation timer after a fresh fetch
             
-        # Rule 2: Approximate intermediate adjustments every 30 seconds
+        # Rule 2: Update clock calculations using local memory data every 10 seconds
         elif current_time - last_approximation >= APPROXIMATION_INTERVAL:
             for line_id in STOPS.keys():
-                # Re-parse current baseline state to count down the minutes naturally
-                payload = fetch_transit_data(line_id)
-                if payload:
-                    process_transit_payload(line_id, payload)
-            last_approximation = current_time
+                # Read directly from local variables instead of calling fetch_transit_data()
+                cached_payload = last_fetched_payloads.get(line_id)
+                if cached_payload:
+                    process_transit_payload(line_id, cached_payload)
+                time.sleep(5)  # Stagger requests to avoid hitting API burst block rate limits
+            last_approximation = time.time()
             
         # Keep execution loops light without freezing system resources
         time.sleep(0.5)

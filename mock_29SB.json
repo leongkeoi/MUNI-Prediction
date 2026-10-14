@@ -1,0 +1,131 @@
+{
+  "ServiceDelivery": {
+    "ResponseTimestamp": "2026-10-14T16:25:35Z",
+    "ProducerRef": "SF",
+    "Status": true,
+    "StopMonitoringDelivery": {
+      "version": "1.4",
+      "ResponseTimestamp": "2026-10-14T16:25:35Z",
+      "Status": true,
+      "MonitoredStopVisit": [
+        {
+          "RecordedAtTime": "1970-01-01T00:00:00Z",
+          "MonitoringRef": "16555",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "OB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-14",
+              "DatedVehicleJourneyRef": "12119082_M11"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "13706",
+            "OriginName": "Bowley St & Lincoln Blvd",
+            "DestinationRef": "14648",
+            "DestinationName": "Fitzgerald Ave & Keith St",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "",
+              "Latitude": ""
+            },
+            "Bearing": null,
+            "Occupancy": null,
+            "VehicleRef": null,
+            "MonitoredCall": {
+              "StopPointRef": "16555",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "",
+              "DestinationDisplay": "Paul + Third Street",
+              "AimedArrivalTime": "2026-10-14T16:24:45Z",
+              "ExpectedArrivalTime": "2026-10-14T16:26:17Z",
+              "AimedDepartureTime": "2026-10-14T16:24:45Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "2026-10-14T16:25:02Z",
+          "MonitoringRef": "16555",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "OB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-14",
+              "DatedVehicleJourneyRef": "12119083_M11"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "13706",
+            "OriginName": "Bowley St & Lincoln Blvd",
+            "DestinationRef": "14648",
+            "DestinationName": "Fitzgerald Ave & Keith St",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.49617",
+              "Latitude": "37.764679"
+            },
+            "Bearing": "0.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "8752",
+            "MonitoredCall": {
+              "StopPointRef": "16555",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Paul + Third Street",
+              "AimedArrivalTime": "2026-10-14T16:32:45Z",
+              "ExpectedArrivalTime": "2026-10-14T16:31:58Z",
+              "AimedDepartureTime": "2026-10-14T16:32:45Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "2026-10-14T16:25:02Z",
+          "MonitoringRef": "16555",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "OB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-14",
+              "DatedVehicleJourneyRef": "12119084_M11"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "13706",
+            "OriginName": "Bowley St & Lincoln Blvd",
+            "DestinationRef": "14648",
+            "DestinationName": "Fitzgerald Ave & Keith St",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.484436",
+              "Latitude": "37.7750893"
+            },
+            "Bearing": "165.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "8891",
+            "MonitoredCall": {
+              "StopPointRef": "16555",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Paul + Third Street",
+              "AimedArrivalTime": "2026-10-14T16:41:31Z",
+              "ExpectedArrivalTime": "2026-10-14T16:42:11Z",
+              "AimedDepartureTime": "2026-10-14T16:41:31Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}
