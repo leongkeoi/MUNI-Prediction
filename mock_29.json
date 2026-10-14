@@ -1,0 +1,131 @@
+{
+  "ServiceDelivery": {
+    "ResponseTimestamp": "2026-10-13T03:00:30Z",
+    "ProducerRef": "SF",
+    "Status": true,
+    "StopMonitoringDelivery": {
+      "version": "1.4",
+      "ResponseTimestamp": "2026-10-13T03:00:30Z",
+      "Status": true,
+      "MonitoredStopVisit": [
+        {
+          "RecordedAtTime": "2026-10-13T03:00:01Z",
+          "MonitoringRef": "16556",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-12",
+              "DatedVehicleJourneyRef": "12119429"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "14648",
+            "OriginName": "Fitzgerald Ave & Keith St",
+            "DestinationRef": "13706",
+            "DestinationName": "Bowley St & Lincoln Blvd",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.465599",
+              "Latitude": "37.719696"
+            },
+            "Bearing": "255.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "8703",
+            "MonitoredCall": {
+              "StopPointRef": "16556",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Baker Beach",
+              "AimedArrivalTime": "2026-10-13T03:15:50Z",
+              "ExpectedArrivalTime": "2026-10-13T03:13:06Z",
+              "AimedDepartureTime": "2026-10-13T03:15:50Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "2026-10-13T03:00:01Z",
+          "MonitoringRef": "16556",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-12",
+              "DatedVehicleJourneyRef": "12119428"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "14648",
+            "OriginName": "Fitzgerald Ave & Keith St",
+            "DestinationRef": "13706",
+            "DestinationName": "Bowley St & Lincoln Blvd",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.411858",
+              "Latitude": "37.7186127"
+            },
+            "Bearing": "240.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "8749",
+            "MonitoredCall": {
+              "StopPointRef": "16556",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Baker Beach",
+              "AimedArrivalTime": "2026-10-13T03:30:50Z",
+              "ExpectedArrivalTime": "2026-10-13T03:31:07Z",
+              "AimedDepartureTime": "2026-10-13T03:30:50Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "2026-10-13T03:00:01Z",
+          "MonitoringRef": "16556",
+          "MonitoredVehicleJourney": {
+            "LineRef": "29",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-12",
+              "DatedVehicleJourneyRef": "12119427"
+            },
+            "PublishedLineName": "SUNSET",
+            "OperatorRef": "SF",
+            "OriginRef": "14648",
+            "OriginName": "Fitzgerald Ave & Keith St",
+            "DestinationRef": "13706",
+            "DestinationName": "Bowley St & Lincoln Blvd",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.39444",
+              "Latitude": "37.7226601"
+            },
+            "Bearing": "0.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "8714",
+            "MonitoredCall": {
+              "StopPointRef": "16556",
+              "StopPointName": "Sunset Blvd & Taraval St",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Baker Beach",
+              "AimedArrivalTime": "2026-10-13T03:45:50Z",
+              "ExpectedArrivalTime": "2026-10-13T03:45:44Z",
+              "AimedDepartureTime": "2026-10-13T03:45:50Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}

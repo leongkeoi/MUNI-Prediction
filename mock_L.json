@@ -1,0 +1,131 @@
+{
+  "ServiceDelivery": {
+    "ResponseTimestamp": "2026-10-14T02:52:42Z",
+    "ProducerRef": "SF",
+    "Status": true,
+    "StopMonitoringDelivery": {
+      "version": "1.4",
+      "ResponseTimestamp": "2026-10-14T02:52:42Z",
+      "Status": true,
+      "MonitoredStopVisit": [
+        {
+          "RecordedAtTime": "2026-10-14T02:52:05Z",
+          "MonitoringRef": "16641",
+          "MonitoredVehicleJourney": {
+            "LineRef": "L",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-13",
+              "DatedVehicleJourneyRef": "12134518_M11"
+            },
+            "PublishedLineName": "TARAVAL",
+            "OperatorRef": "SF",
+            "OriginRef": "16932",
+            "OriginName": "Wawona/46th Ave /Sf Zoo",
+            "DestinationRef": "16992",
+            "DestinationName": "Metro Embarcadero Station",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "-122.504578",
+              "Latitude": "37.7361717"
+            },
+            "Bearing": "75.0000000000",
+            "Occupancy": "seatsAvailable",
+            "VehicleRef": "2072",
+            "MonitoredCall": {
+              "StopPointRef": "16641",
+              "StopPointName": "Taraval St & Sunset Blvd",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "false",
+              "DestinationDisplay": "Embarcadero Station",
+              "AimedArrivalTime": "2026-10-14T02:56:00Z",
+              "ExpectedArrivalTime": "2026-10-14T02:57:16Z",
+              "AimedDepartureTime": "2026-10-14T02:56:00Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "1970-01-01T00:00:00Z",
+          "MonitoringRef": "16641",
+          "MonitoredVehicleJourney": {
+            "LineRef": "L",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-13",
+              "DatedVehicleJourneyRef": "12134519_M11"
+            },
+            "PublishedLineName": "TARAVAL",
+            "OperatorRef": "SF",
+            "OriginRef": "16932",
+            "OriginName": "Wawona/46th Ave /Sf Zoo",
+            "DestinationRef": "16992",
+            "DestinationName": "Metro Embarcadero Station",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "",
+              "Latitude": ""
+            },
+            "Bearing": null,
+            "Occupancy": null,
+            "VehicleRef": null,
+            "MonitoredCall": {
+              "StopPointRef": "16641",
+              "StopPointName": "Taraval St & Sunset Blvd",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "",
+              "DestinationDisplay": "Embarcadero Station",
+              "AimedArrivalTime": "2026-10-14T03:11:00Z",
+              "ExpectedArrivalTime": "2026-10-14T03:11:54Z",
+              "AimedDepartureTime": "2026-10-14T03:11:00Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        },
+        {
+          "RecordedAtTime": "1970-01-01T00:00:00Z",
+          "MonitoringRef": "16641",
+          "MonitoredVehicleJourney": {
+            "LineRef": "L",
+            "DirectionRef": "IB",
+            "FramedVehicleJourneyRef": {
+              "DataFrameRef": "2026-10-13",
+              "DatedVehicleJourneyRef": "12134520_M11"
+            },
+            "PublishedLineName": "TARAVAL",
+            "OperatorRef": "SF",
+            "OriginRef": "16932",
+            "OriginName": "Wawona/46th Ave /Sf Zoo",
+            "DestinationRef": "16992",
+            "DestinationName": "Metro Embarcadero Station",
+            "Monitored": true,
+            "InCongestion": null,
+            "VehicleLocation": {
+              "Longitude": "",
+              "Latitude": ""
+            },
+            "Bearing": null,
+            "Occupancy": null,
+            "VehicleRef": null,
+            "MonitoredCall": {
+              "StopPointRef": "16641",
+              "StopPointName": "Taraval St & Sunset Blvd",
+              "VehicleLocationAtStop": "",
+              "VehicleAtStop": "",
+              "DestinationDisplay": "Embarcadero Station",
+              "AimedArrivalTime": "2026-10-14T03:26:00Z",
+              "ExpectedArrivalTime": "2026-10-14T03:26:54Z",
+              "AimedDepartureTime": "2026-10-14T03:26:00Z",
+              "ExpectedDepartureTime": null,
+              "Distances": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}
