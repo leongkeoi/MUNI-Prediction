@@ -193,10 +193,11 @@ def fetch_transit_data(line_id: str):
 
 def data_pipeline_worker():
     """Background engine managing network calls (181s) and time approximations (10s)."""
+    # Initialize timers in the past so they trigger immediately upon boot
     last_api_fetch = 0
     last_approximation = 0
     
-    print("🚀 Starting background data pipeline engine...")
+    print("Gathering transit data...")
     
     while True:
         current_time = time.time()
@@ -209,58 +210,117 @@ def data_pipeline_worker():
                     # Save the download cache to memory for future approximations
                     last_fetched_payloads[line_id] = payload
                     process_transit_payload(line_id, payload)
-                time.sleep(5)  # Stagger requests to avoid hitting API burst block rate limits
+                
+                # CRITICAL: Your 5-second protective safety delay to prevent API burst blocking
+                time.sleep(5)  
+            
+            # Reset timers cleanly after the full 15-second loop cycle completes
             last_api_fetch = time.time()
-            last_approximation = last_api_fetch  # Reset approximation timer after a fresh fetch
+            last_approximation = last_api_fetch  
             
         # Rule 2: Update clock calculations using local memory data every 10 seconds
-        elif current_time - last_approximation >= APPROXIMATION_INTERVAL:
+        # CHANGED: Using a clean 'if' instead of 'elif' so it checks independently
+        if current_time - last_approximation >= APPROXIMATION_INTERVAL:
             for line_id in STOPS.keys():
                 # Read directly from local variables instead of calling fetch_transit_data()
                 cached_payload = last_fetched_payloads.get(line_id)
                 if cached_payload:
                     process_transit_payload(line_id, cached_payload)
-                time.sleep(5)  # Stagger requests to avoid hitting API burst block rate limits
+            
+            # REMOVED: The 5-second sleep from the local calculation pass.
+            # Because this rule reads pure text from your Pi's memory cache, 
+            # it hits 0% network traffic and cannot trigger API burst limits.
             last_approximation = time.time()
             
         # Keep execution loops light without freezing system resources
         time.sleep(0.5)
 
-# ==========================================
-# INTERFACE EXECUTION LOGIC (Simulation Thread)
-# ==========================================
+# =========================
+# INTERFACE EXECUTION LOGIC
+# =========================
 
 if __name__ == "__main__":
-    # Launch the non-blocking background network data processor
+    # Import Henner Zeller's library inside the main thread wrapper
+    from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics # type: ignore
+
+    # 1. Launch the non-blocking background network data processor
     network_thread = threading.Thread(target=data_pipeline_worker, daemon=True)
     network_thread.start()
     
     # Wait briefly for baseline extraction data to populate initial state variables
     time.sleep(2)
     
-    print("\n🖥️ Simulating LED Frame Engine Output (Press Ctrl+C to terminate):")
+    print("\nMUNI Prediction App Started. Initializing LED Matrix hardware...")
     print("-" * 70)
-    
-    # Run a simulated display switching circuit loop (alternates active key every 15s)
-    lines_pool = list(STOPS.keys())
-    pool_index = 0
-    
+
+    # 2. Configure Henner Zeller's Core Hardware Options
+    options = RGBMatrixOptions()
+    options.rows = 32
+    options.cols = 64
+    options.chain_length = 1
+    options.parallel = 1
+    options.hardware_mapping = 'adafruit-hat'  # Change to 'adafruit-hat-pwm' if using Quality mode
+    options.gpio_slowdown = 1                  # Minimizes text flickering on Raspberry Pi 4/5
+
+    matrix = RGBMatrix(options = options)
+    canvas = matrix.CreateFrameCanvas()
+
+    # 3. Load Your Local 9-Pixel Tall Font Asset
+    font = graphics.Font()
+    font.LoadFont("fonts/6x9.bdf")
+
+    # 4. Define Visual Cosmetics (Colors for your MUNI lines)
+    color_l = graphics.Color(255, 215, 0)      # MUNI Yellow for L Taraval
+    color_nb = graphics.Color(0, 255, 100)     # Mint Green for 29 Sunset NB
+    color_sb = graphics.Color(0, 200, 255)     # Sky Blue for 29 Sunset SB
+
+    # 5. Initialize Horizontal Positions Starting at the Right Wall (64px)
+    x_l = 64.0
+    x_nb = 64.0
+    x_sb = 64.0
+
+    # 6. Customize Scroll Speeds (Pixels per frame)
+    speed_l = 1.0
+    speed_nb = 1.2
+    speed_sb = 0.8
+
+    # 7. Your Exact 0-Indexed Layout Coordinate Plan
+    y_l = 8
+    y_nb = 19
+    y_sb = 30
+
+    # 8. Main Concurrent Animation Frame Loop
     try:
         while True:
-            active_line = lines_pool[pool_index]
-            
-            # Pull data safely across the locked bridge to avoid tearing
+            # Wipe the frame clean before painting the new positions
+            canvas.Clear()
+
+            # Thread-safe read: Snap a fast copy of the strings behind the lock
             with state_lock:
-                current_text = shared_display_strings[active_line]
-                
-            timestamp = datetime.now().strftime("%H:%M:%S")
-            print(f"[{timestamp}] [LED Row Display Active] ➡️  {current_text}")
+                str_l = shared_display_strings["L"]
+                str_nb = shared_display_strings["29_NB"]
+                str_sb = shared_display_strings["29_SB"]
+
+            # Draw all three text elements to our offscreen buffer frame
+            len_l = graphics.DrawText(canvas, font, int(x_l), y_l, color_l, str_l)
+            len_nb = graphics.DrawText(canvas, font, int(x_nb), y_nb, color_nb, str_nb)
+            len_sb = graphics.DrawText(canvas, font, int(x_sb), y_sb, color_sb, str_sb)
+
+            # Shift tracking positions leftward for the next render pass
+            x_l -= speed_l
+            x_nb -= speed_nb
+            x_sb -= speed_sb
+
+            # Reset each sentence to the right side if it scrolls off the left edge
+            if x_l < -len_l: x_l = canvas.width
+            if x_nb < -len_nb: x_nb = canvas.width
+            if x_sb < -len_sb: x_sb = canvas.width
+
+            # Flip the offscreen canvas to the hardware screen on next vertical sync
+            canvas = matrix.SwapOnVSync(canvas)
             
-            # Switch target pointer key for the next loop pass iteration
-            pool_index = (pool_index + 1) % len(lines_pool)
-            
-            # Wait for display visibility window before toggling matrix display frame
-            time.sleep(DISPLAY_SWITCH_INTERVAL)
+            # Smooth 30FPS clock pacing delay
+            time.sleep(0.03)
             
     except KeyboardInterrupt:
-        print("\nStopping data loop execution. Clean exit complete.")
+        print("\nStopping display loop. Matrix cleared. Clean exit complete.")
