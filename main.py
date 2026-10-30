@@ -23,9 +23,9 @@ API_BASE_URL = os.getenv("API_BASE_URL", "http://511.org/transit/StopMonitoring"
 
 # Endpoint Configurations
 STOPS = {
-    "L": {"stopcode": "16641", "mock_file": "mock_L.json"},
-    "29_NB": {"stopcode": "16556", "mock_file": "mock_29NB.json"},
-    "29_SB": {"stopcode": "16555", "mock_file": "mock_29SB.json"},
+    "L": {"stopcode": os.getenv("STOP_L", "15245"), "mock_file": "mock_L.json"},
+    "29_NB": {"stopcode": os.getenv("STOP_29_NB", "16316"), "mock_file": "mock_29NB.json"},
+    "29_SB": {"stopcode": os.getenv("STOP_29_SB", "16220"), "mock_file": "mock_29SB.json"},
 }
 
 # Timing Intervals (in seconds)
